@@ -1,7 +1,7 @@
 # InfluxMonitor
 Usage: 
 ```sh
-influxmonitor `<healthendpoint>` `<emailaddress>`
+influxmonitor <healthendpoint> <emailaddress>
 ```
 Example: 
 ```sh
