@@ -26,18 +26,18 @@ func main() {
 	endpoint := os.Args[1]
 	email := os.Args[2]
 	var message string
-	respons, err := http.Get(endpoint)
-	if err != nil || respons == nil {
+	response, err := http.Get(endpoint)
+	if err != nil || response == nil {
 		message = fmt.Sprintf("%v is unreachable\n", endpoint)
 	}
-	if respons != nil {
-		if respons.StatusCode != http.StatusOK {
-			message = fmt.Sprintf("Status: Expected %v but got %v\n", http.StatusOK, respons.StatusCode)
+	if response != nil {
+		if response.StatusCode != http.StatusOK {
+			message = fmt.Sprintf("Status: Expected %v but got %v\n", http.StatusOK, response.StatusCode)
 		}
 		var result map[string]string
-		body, err := io.ReadAll(respons.Body)
+		body, err := io.ReadAll(response.Body)
 		if err != nil {
-			message += fmt.Sprintln("failed to read response body")
+			message += fmt.Sprintln("failed to read responsee body")
 		}
 		json.Unmarshal([]byte(body), &result)
 
