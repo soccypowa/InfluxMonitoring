@@ -25,6 +25,12 @@ func main() {
 	}
 	endpoint := os.Args[1]
 	email := os.Args[2]
+	executingHost, _ := os.Hostname()
+	remoteHost, err := extractFQDN(endpoint)
+
+		if err != nil {
+			log.Fatalf("Failed extracting FQDN from endpoint: %v", err)
+		}
 	var message string
 	response, err := http.Get(endpoint)
 	if err != nil || response == nil {
@@ -46,8 +52,8 @@ func main() {
 		}
 	}
 	if message != "" {
-		hostname, _ := os.Hostname()
-		err = smtp.SendMail(SMTP_SERVER, nil, SMTP_FROM, []string{email}, []byte(fmt.Sprintf("Subject: %s %v\n", SMTP_SUBJECT, hostname)+fmt.Sprintf("\n%s\n", message)))
+		message = message + fmt.Sprintf("\n\nTest executed from: %s\n", executingHost)
+		err = smtp.SendMail(SMTP_SERVER, nil, SMTP_FROM, []string{email}, []byte(fmt.Sprintf("Subject: %s %v\n", SMTP_SUBJECT, remoteHost)+fmt.Sprintf("\n%s\n", message)))
 		if err != nil {
 			log.Fatal("Sending email failed with: ", err)
 		}
