@@ -1,4 +1,5 @@
+# macOS
 .DS_Store
-.vscode/
-influxmonitor
-influxmonitor.exe
+
+# Binaries
+/build
